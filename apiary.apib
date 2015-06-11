@@ -9,7 +9,7 @@ An API for managing Global Load Balancers
 
 This should return the usual versions / data types stuff
 
-## Retrieve the Entry Point [GET]
+## Root [GET]
 
 + Response 200 (application/json)
 
@@ -25,14 +25,11 @@ This should return the usual versions / data types stuff
         }
 
 
-# Group v1.0
-
-
 ## Root [/v1.0]
 
 This should be a JSON Home style thing
 
-## Retrieve the Entry Point [GET]
+## Root [GET]
 
 + Response 200 (application/json)
 
@@ -41,155 +38,38 @@ This should be a JSON Home style thing
         }
 
 
-## Question [/questions/{question_id}]
+# Group GSLB
 
-A Question object has the following attributes:
+## GLSBs [/v1.0/gslbs]
 
-+ question
-+ published_at - An ISO8601 date when the question was published.
-+ url
-+ choices - An array of Choice objects.
+This will be the main point of contact in the API
 
-+ Parameters
-    + question_id: 1 (required, number) - ID of the Question in form of an integer
-
-### View a Questions Detail [GET]
+## List [GET]
 
 + Response 200 (application/json)
-
+    
         {
-            "question": "Favourite programming language?",
-            "published_at": "2014-11-11T08:40:51.620Z",
-            "url": "/questions/1",
-            "choices": [
+            "gslbs": [
                 {
-                    "choice": "Swift",
-                    "url": "/questions/1/choices/1",
-                    "votes": 2048
-                }, {
-                    "choice": "Python",
-                    "url": "/questions/1/choices/2",
-                    "votes": 1024
-                }, {
-                    "choice": "Objective-C",
-                    "url": "/questions/1/choices/3",
-                    "votes": 512
-                }, {
-                    "choice": "Ruby",
-                    "url": "/questions/1/choices/4",
-                    "votes": 256
-                }
-            ]
-        }
-
-## Choice [/questions/{question_id}/choices/{choice_id}]
-
-+ Parameters
-    + question_id: 1 (required, number) - ID of the Question in form of an integer
-    + choice_id: 1 (required, number) - ID of the Choice in form of an integer
-
-### Vote on a Choice [POST]
-
-This action allows you to vote on a question's choice.
-
-+ Response 201
-
-    + Headers
-
-            Location: /questions/1
-
-## Questions Collection [/questions{?page}]
-
-+ Parameters
-    + page: 1 (optional, number) - The page of questions to return
-
-### List All Questions [GET]
-
-+ Response 200 (application/json)
-
-    + Headers
-
-            Link: </questions?page=2>; rel="next"
-
-    + Body
-
-            [
-                {
-                    "question": "Favourite programming language?",
-                    "published_at": "2014-11-11T08:40:51.620Z",
-                    "url": "/questions/1",
-                    "choices": [
-                        {
-                            "choice": "Swift",
-                            "url": "/questions/1/choices/1",
-                            "votes": 2048
-                        }, {
-                            "choice": "Python",
-                            "url": "/questions/1/choices/2",
-                            "votes": 1024
-                        }, {
-                            "choice": "Objective-C",
-                            "url": "/questions/1/choices/3",
-                            "votes": 512
-                        }, {
-                            "choice": "Ruby",
-                            "url": "/questions/1/choices/4",
-                            "votes": 256
-                        }
-                    ]
-                }
-            ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
-
-+ question (string) - The question
-+ choices (array[string]) - A collection of choices.
-
-+ Request (application/json)
-
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
-
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /questions/2
-
-    + Body
-
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2014-11-11T08:40:51.620Z",
-                "url": "/questions/2",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "url": "/questions/2/choices/1",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "url": "/questions/2/choices/2",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "url": "/questions/2/choices/3",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "url": "/questions/2/choices/4",
-                        "votes": 0
+                    "id": "f9fc6210-8efa-4492-9b4f-d87ba98f35b8"
+                    "name": "Main Website",
+                    "fqdn": "www.gslb.example.com.",
+                    "flavor": "example_1",
+                    "pool_members":[
+                        {"id":"a57b4a05-b04d-45a5-b60d-06fcd5927750"},
+                        {"id":"02439266-c215-4fc8-84f6-466349e30f38"},
+                        {"id":"7b231857-d1d4-4bf4-9d18-9b48db02eb50"}
+                    ],
+                    "links": {
+                        "self" : "http://example.gslb.openstack.org/v1.0/gslbs/f9fc6210-8efa-4492-9b4f-d87ba98f35b8",
+                        "pool_members" : "http://example.gslb.openstack.org/v1.0/gslbs/f9fc6210-8efa-4492-9b4f-d87ba98f35b8/pool_members",
+                        "status" : "http://example.gslb.openstack.org/v1.0/gslbs/f9fc6210-8efa-4492-9b4f-d87ba98f35b8/status"
                     }
-                ]
-            }
+                }
+            ],
+            "metadata": {"tbd":""}
+        }
+
+
+
+
