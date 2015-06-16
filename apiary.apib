@@ -18,7 +18,7 @@ This should return the usual versions / data types stuff
                 "v1.0":{
                     "status": "CURRENT",
                     "links":{
-                        "self": "http://example.gslb.openstack.org/v1.0/
+                        "self": "http://example.gslb.openstack.org/v1.0/"
                     }
                 }
             }
@@ -44,7 +44,9 @@ This should be a JSON Home style thing
 
 This will be the main point of contact in the API
 
-## List [GET]
+Maybe should be similar to the Neutron LBaaS V2 API.
+
+### List [GET]
 
 + Response 200 (application/json)
     
@@ -54,7 +56,9 @@ This will be the main point of contact in the API
                     "id": "f9fc6210-8efa-4492-9b4f-d87ba98f35b8"
                     "name": "Main Website",
                     "fqdn": "www.gslb.example.com.",
+                    "domain_name": "example.com."
                     "flavor": "example_1",
+                    "status": "ACTIVE",
                     "pool_members":[
                         {"id":"a57b4a05-b04d-45a5-b60d-06fcd5927750"},
                         {"id":"02439266-c215-4fc8-84f6-466349e30f38"},
@@ -70,6 +74,58 @@ This will be the main point of contact in the API
             "metadata": {"tbd":""}
         }
 
+### Create [POST]
 
++ Request (application/json)
 
+        {
+            "name": "Main Website",
+            "fqdn": "www.gslb.example.com.",
+            "domain_name": "example.com."
+            "flavor": "example_1",
+        }
 
++ Response 202 (application/json)
+    
+        {
+            "id": "f9fc6210-8efa-4492-9b4f-d87ba98f35b8"
+            "name": "Main Website",
+            "fqdn": "www.gslb.example.com.",
+            "domain_name": "example.com."
+            "flavor": "example_1",
+            "pool_members":[],
+            "status": "CREATING",
+            "links": {
+                "self" : "http://example.gslb.openstack.org/v1.0/gslbs/f9fc6210-8efa-4492-9b4f-d87ba98f35b8",
+                "pool_members" : "http://example.gslb.openstack.org/v1.0/gslbs/f9fc6210-8efa-4492-9b4f-d87ba98f35b8/pool_members",
+                "status" : "http://example.gslb.openstack.org/v1.0/gslbs/f9fc6210-8efa-4492-9b4f-d87ba98f35b8/status"
+            }
+        }
+
+# Group Flavors
+
+## Flavor Operations [/v1.0/flavors]
+
+This should be something similar to the neutron flavor frame work - but maybe not as complex
+This will allow for different backends to expose capabilities to the end user, and allow for a multi vendor solution 
+
+### List [GET]
+
++ Response 200 (application/json)
+    
+        {
+            "flavors": [
+                {
+                    "id": "f9fc6210-8efa-4492-9b4f-d87ba98f35b8"
+                    "name": "example_1",
+                    "tags": [
+                        ""
+                    ],
+                    "links": {
+                        "self" : "http://example.gslb.openstack.org/v1.0/flavors/f9fc6210-8efa-4492-9b4f-d87ba98f35b8",
+                        "tags" : "http://example.gslb.openstack.org/v1.0/flavors/f9fc6210-8efa-4492-9b4f-d87ba98f35b8/tags"
+                    }
+                }
+            ],
+            "metadata": {"tbd":""}
+        }
